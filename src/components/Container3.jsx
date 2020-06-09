@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Container3() {
+function Container3() {
   return (
     <div class="site-section pt-0">
       <div class="container">
