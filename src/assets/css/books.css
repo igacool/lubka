@@ -1,0 +1,6 @@
+.item-wrap .img-fluid {
+  max-height: 100%;
+  position: relative;
+  width: 100%;
+  padding: 10px;
+}

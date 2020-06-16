@@ -10,6 +10,7 @@ import "./assets/vendor/line-awesome/css/line-awesome.min.css";
 import "./assets/vendor/owlcarousel/assets/owl.carousel.min.css";
 import "./assets/vendor/bootstrap/css/bootstrap.min.css";
 import "./assets/css/style.css";
+import "./assets/css/books.css";
 
 const App = () => {
   return (
