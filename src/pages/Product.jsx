@@ -2,6 +2,7 @@ import React from "react";
 import { ProductList } from "./ProductList";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+
 function Product() {
   const { id } = useParams();
 
@@ -12,6 +13,10 @@ function Product() {
       currentProduct = ProductList[i];
     }
   }
+
+  const goTop = () => {
+    window.scrollTo(0, 0);
+  };
 
   const productList = ProductList;
   return (
@@ -43,7 +48,7 @@ function Product() {
 
                     <p>
                       <a href="foo" class="readmore">
-                        Visit Website
+                        Вартість: {currentProduct.cost} грн
                       </a>
                     </p>
                   </div>
@@ -70,6 +75,7 @@ function Product() {
                             <Link
                               to={`/product/${value.id}`}
                               class="item-wrap fancybox"
+                              onClick={goTop()}
                             >
                               <div class="work-info">
                                 <h3>{value.name}</h3>

@@ -1,6 +1,7 @@
 import React from "react";
 import { ProductList } from "./ProductList";
 import { Link } from "react-router-dom";
+
 const Main = () => {
   const productList = ProductList;
   return (
