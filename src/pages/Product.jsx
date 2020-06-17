@@ -3,6 +3,8 @@ import { ProductList } from "./ProductList";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+import "../assets/css/books.css";
+
 function Product() {
   const { id } = useParams();
 
@@ -30,17 +32,17 @@ function Product() {
                   <img
                     src={require(`${currentProduct.imgSrc}`)}
                     alt="Image"
-                    class="img-fluid"
+                    class="img-fluid toppic"
                   />
                 </div>
                 <div
-                  class="col-md-3 ml-auto aos-init aos-animate"
+                  class="col-md-3 ml-auto aos-init aos-animate name"
                   data-aos="fade-up"
                   data-aos-delay="100"
                 >
                   <div class="sticky-content">
                     <h3 class="h3">{currentProduct.name}</h3>
-                    <p class="mb-4"></p>
+                    <p class="mb-4 "></p>
 
                     <div class="mb-5">
                       <p>{currentProduct.descr}</p>
@@ -57,11 +59,7 @@ function Product() {
                 <div class="container">
                   <div class="row justify-content-center text-center mb-4">
                     <div class="col-5">
-                      <h3 class="h3 heading">More Works</h3>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit
-                        explicabo inventore.
-                      </p>
+                      <h3 class="h3 heading new">Більше книг</h3>
                     </div>
 
                     <div
@@ -71,7 +69,7 @@ function Product() {
                     >
                       {productList.map((value, index) => {
                         return (
-                          <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+                          <div class="item web col-sm-6 col-md-4 col-lg-3">
                             <Link
                               to={`/product/${value.id}`}
                               class="item-wrap fancybox"
@@ -79,7 +77,7 @@ function Product() {
                             >
                               <div class="work-info">
                                 <h3>{value.name}</h3>
-                                <span>{value.descr}</span>
+                                <span>{value.about}</span>
                               </div>
                               <img
                                 class="img-fluid"

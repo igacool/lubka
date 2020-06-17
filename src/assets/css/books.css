@@ -4,3 +4,23 @@
   width: 100%;
   padding: 10px;
 }
+.img-fluid.toppic {
+  height: 500px;
+}
+
+.col-md-3.ml-auto.aos-init.aos-animate.name {
+  margin-left: 1px !important;
+  padding-left: 1px;
+}
+
+.h3.heading.new {
+  padding-top: 50px;
+}
+
+.hello {
+  padding-left: 50px;
+}
+
+.mb-0 {
+  padding-left: 50px;
+}

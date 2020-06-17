@@ -18,7 +18,7 @@ const Main = () => {
               <Link to={`/product/${value.id}`} class="item-wrap fancybox">
                 <div class="work-info">
                   <h3>{value.name}</h3>
-                  <span>{value.descr}</span>
+                  <span>{value.about}</span>
                 </div>
                 <img class="img-fluid" src={require(`${value.imgSrc}`)} />
               </Link>

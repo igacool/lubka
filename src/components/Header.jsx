@@ -5,8 +5,8 @@ function Header() {
     <>
       <nav class="navbar navbar-light custom-navbar">
         <div class="container">
-          <a class="navbar-brand" href="index.html">
-            MyPortfolio.
+          <a class="navbar-brand" href="/">
+            Сайт Андрія Любки.
           </a>
 
           <a
