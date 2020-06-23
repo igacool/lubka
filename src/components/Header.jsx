@@ -3,15 +3,15 @@ import React from "react";
 function Header() {
   return (
     <>
-      <nav class="navbar navbar-light custom-navbar">
-        <div class="container">
-          <a class="navbar-brand" href="/">
+      <nav className="navbar navbar-light custom-navbar">
+        <div className="container">
+          <a className="navbar-brand" href="/">
             Сайт Андрія Любки.
           </a>
 
           <a
             href="#"
-            class="burger"
+            className="burger"
             data-toggle="collapse"
             data-target="#main-navbar"
           >

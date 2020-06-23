@@ -8,19 +8,19 @@ const Main = () => {
     <>
       <div
         id="portfolio-grid"
-        class="row no-gutter"
+        className="row no-gutter"
         data-aos="fade-up"
         data-aos-delay="200"
       >
         {productList.map((value, index) => {
           return (
-            <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-              <Link to={`/product/${value.id}`} class="item-wrap fancybox">
-                <div class="work-info">
+            <div className="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+              <Link to={`/product/${value.id}`} className="item-wrap fancybox">
+                <div className="work-info">
                   <h3>{value.name}</h3>
                   <span>{value.about}</span>
                 </div>
-                <img class="img-fluid" src={require(`${value.imgSrc}`)} />
+                <img className="img-fluid" src={require(`${value.imgSrc}`)} />
               </Link>
             </div>
           );

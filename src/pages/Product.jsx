@@ -19,68 +19,86 @@ function Product() {
   const goTop = () => {
     window.scrollTo(0, 0);
   };
+  const saveProduct = () => {
+    let storage = localStorage.getItem("shopCart");
+    storage = (storage && storage.split(",")) || [];
+    console.log(storage);
+    if (!storage.includes(`${currentProduct.id}`)) {
+      storage.push(`${currentProduct.id}`);
+      localStorage.setItem("shopCart", storage);
+    }
+
+    console.log(storage);
+  };
 
   const productList = ProductList;
   return (
     <>
       <main id="main">
-        <div class="site-section">
-          <div class="site-section pb-0">
-            <div class="container">
-              <div class="row align-items-stretch">
-                <div class="col-md-8 aos-init aos-animate" data-aos="fade-up">
+        <div className="site-section">
+          <div className="site-section pb-0">
+            <div className="container">
+              <div className="row align-items-stretch">
+                <div
+                  className="col-md-8 aos-init aos-animate"
+                  data-aos="fade-up"
+                >
                   <img
                     src={require(`${currentProduct.imgSrc}`)}
                     alt="Image"
-                    class="img-fluid toppic"
+                    className="img-fluid toppic"
                   />
                 </div>
                 <div
-                  class="col-md-3 ml-auto aos-init aos-animate name"
+                  className="col-md-3 ml-auto aos-init aos-animate name"
                   data-aos="fade-up"
                   data-aos-delay="100"
                 >
-                  <div class="sticky-content">
-                    <h3 class="h3">{currentProduct.name}</h3>
-                    <p class="mb-4 "></p>
+                  <div className="sticky-content">
+                    <h3 className="h3">{currentProduct.name}</h3>
+                    <p className="mb-4 "></p>
 
-                    <div class="mb-5">
+                    <div className="mb-5">
                       <p>{currentProduct.descr}</p>
                     </div>
 
                     <p>
-                      <a href="foo" class="readmore">
+                      <Link
+                        to="/basket"
+                        className="readmore"
+                        onClick={saveProduct}
+                      >
                         Вартість: {currentProduct.cost} грн
-                      </a>
+                      </Link>
                     </p>
                   </div>
                 </div>
 
-                <div class="container">
-                  <div class="row justify-content-center text-center mb-4">
-                    <div class="col-5">
-                      <h3 class="h3 heading new">Більше книг</h3>
+                <div className="container">
+                  <div className="row justify-content-center text-center mb-4">
+                    <div className="col-5">
+                      <h3 className="h3 heading new">Більше книг</h3>
                     </div>
 
                     <div
-                      class="row aos-init aos-animate"
+                      className="row aos-init aos-animate"
                       data-aos="fade-up"
                       data-aos-delay="200"
                     >
                       {productList.map((value, index) => {
                         return (
-                          <div class="item web col-sm-6 col-md-4 col-lg-3">
+                          <div className="item web col-sm-6 col-md-4 col-lg-3">
                             <Link
                               to={`/product/${value.id}`}
-                              class="item-wrap fancybox"
+                              className="item-wrap fancybox"
                               onClick={goTop()}
                             >
-                              <div class="work-info">
+                              <div className="work-info">
                                 <h3>{value.name}</h3>
                                 <span>{value.about}</span>
                               </div>
                               <img
-                                class="img-fluid"
+                                className="img-fluid"
                                 src={require(`${value.imgSrc}`)}
                               />
                             </Link>

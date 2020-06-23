@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import Layout from "./components/Layout";
 import Main from "./pages/Main";
 import Product from "./pages/Product";
+import Basket from "./pages/Basket";
 
 import "./assets/vendor/icofont/icofont.min.css";
 import "./assets/vendor/line-awesome/css/line-awesome.min.css";
@@ -17,6 +18,7 @@ const App = () => {
     <BrowserRouter>
       <Switch>
         <Layout>
+          <Route exact path="/basket" component={Basket} />
           <Route exact path="/product/:id" component={Product} />
           <Route exact path="/" component={Main} />
         </Layout>
