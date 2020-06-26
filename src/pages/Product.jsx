@@ -22,13 +22,11 @@ function Product() {
   const saveProduct = () => {
     let storage = localStorage.getItem("shopCart");
     storage = (storage && storage.split(",")) || [];
-    console.log(storage);
+
     if (!storage.includes(`${currentProduct.id}`)) {
       storage.push(`${currentProduct.id}`);
       localStorage.setItem("shopCart", storage);
     }
-
-    console.log(storage);
   };
 
   const productList = ProductList;
@@ -87,7 +85,10 @@ function Product() {
                     >
                       {productList.map((value, index) => {
                         return (
-                          <div className="item web col-sm-6 col-md-4 col-lg-3">
+                          <div
+                            className="item web col-sm-6 col-md-4 col-lg-3"
+                            key={index}
+                          >
                             <Link
                               to={`/product/${value.id}`}
                               className="item-wrap fancybox"

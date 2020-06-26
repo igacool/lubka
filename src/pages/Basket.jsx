@@ -1,5 +1,6 @@
 import React from "react";
 import { ProductList } from "./ProductList";
+import { Link } from "react-router-dom";
 
 import "../assets/css/books.css";
 
@@ -58,9 +59,7 @@ class Basket extends React.Component {
                       <th scope="col"> </th>
                       <th scope="col">Назва книги</th>
                       <th scope="col">Наявність</th>
-                      <th scope="col" className="text-center">
-                        Кількість
-                      </th>
+
                       <th scope="col" className="text-right">
                         Ціна
                       </th>
@@ -71,15 +70,13 @@ class Basket extends React.Component {
                   <tbody>
                     {this.state.productList.map((currentProduct, index) => {
                       return (
-                        <tr>
+                        <tr key={index}>
                           <td>
                             <img src={require(`${currentProduct.imgSrc}`)} />{" "}
                           </td>
                           <td>{currentProduct.name}</td>
                           <td>In stock</td>
-                          <td>
-                            <input className="form-control" type="text" />
-                          </td>
+
                           <td className="text-right">
                             {currentProduct.cost} ГРН
                           </td>
@@ -105,13 +102,13 @@ class Basket extends React.Component {
             <div className="col mb-2">
               <div className="row">
                 <div className="col-sm-12  col-md-6">
-                  <button className="btn btn-block btn-light">
-                    Continue Shopping
+                  <button className="btn btn-block btn-light" onClick={`/`}>
+                    <Link to="/">Продовжити покупки</Link>
                   </button>
                 </div>
                 <div className="col-sm-12 col-md-6 text-right">
                   <button className="btn btn-lg btn-block btn-success text-uppercase">
-                    Checkout
+                    Оплатити
                   </button>
                 </div>
               </div>

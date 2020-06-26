@@ -7,6 +7,7 @@ export const ProductList = [
     imgSrc: "./img/barbar.jpg",
     cost: 10,
     about: "роман",
+    type: "novel",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ export const ProductList = [
     imgSrc: "./img/chio.jpg",
     cost: 20,
     about: "роман",
+    type: "novel",
   },
   {
     id: 3,
@@ -25,6 +27,7 @@ export const ProductList = [
     imgSrc: "./img/saudade.jpg",
     cost: 30,
     about: "роман",
+    type: "novel",
   },
   {
     id: 4,
@@ -34,6 +37,7 @@ export const ProductList = [
     imgSrc: "./img/killer.jpg",
     cost: 40,
     about: "роман",
+    type: "novel",
   },
   {
     id: 5,
@@ -43,6 +47,7 @@ export const ProductList = [
     imgSrc: "./img/kimnata.jpg",
     cost: 50,
     about: "роман",
+    type: "novel",
   },
   {
     id: 6,
@@ -52,5 +57,42 @@ export const ProductList = [
     imgSrc: "./img/karbid.jpg",
     cost: 60,
     about: "роман",
+    type: "novel",
+  },
+  {
+    id: 7,
+    name: "Батько",
+    descr: "Роман Мілєнко Єрґовича в перекладі Андрія Любки",
+    imgSrc: "./img/batko.jpg",
+    cost: 135,
+    about: "переклад",
+    type: "translation",
+  },
+  {
+    id: 8,
+    name: "Фама про велосипедистів",
+    descr: "Роман Светислава Басари в перекладі Андрія Любки",
+    imgSrc: "./img/fama.jpg",
+    cost: 140,
+    about: "переклад",
+    type: "translation",
+  },
+  {
+    id: 9,
+    name: "У трюмі",
+    descr: "Роман Владимира Арсенієвича в перекладі Андрія Любки",
+    imgSrc: "./img/trum.jpg",
+    cost: 140,
+    about: "переклад",
+    type: "translation",
+  },
+  {
+    id: 10,
+    name: "Концерт",
+    descr: "Роман Мухарема Баздуля в перекладі Андрія Любки",
+    imgSrc: "./img/koncert.jpg",
+    cost: 90,
+    about: "переклад",
+    type: "translation",
   },
 ];
