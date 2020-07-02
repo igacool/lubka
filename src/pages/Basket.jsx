@@ -1,13 +1,15 @@
 import React from "react";
 import { ProductList } from "./ProductList";
 import { Link } from "react-router-dom";
-
+import Modal from "react-modal";
+import { useState } from "react";
 import "../assets/css/books.css";
 
 class Basket extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      modalIsOpen: true,
       productList: ProductList.filter((product) => {
         if (this.shipIds.includes(String(product.id))) {
           return true;
@@ -15,9 +17,41 @@ class Basket extends React.Component {
       }),
     };
   }
-
+  subtitle;
   currentProduct;
   shipIds = localStorage.getItem("shopCart").split(",");
+
+  customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      width: "500px",
+      maxwidth: "100%",
+      transform: "translate(-50%, -50%)",
+      height: "400px",
+      maxheight: "100%",
+      position: "fixed",
+    },
+  };
+
+  openModal = () => {
+    this.setState({
+      modalIsOpen: true,
+    });
+  };
+
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+  }
+
+  closeModal = () => {
+    this.setState({
+      modalIsOpen: false,
+    });
+  };
 
   deleteProduct = (productId) => {
     let shipIdsArray = localStorage.getItem("shopCart").split(",");
@@ -36,6 +70,7 @@ class Basket extends React.Component {
 
     this.setState({
       productList: productList,
+      modalIsOpen: true,
     });
     localStorage.setItem("shopCart", shipIdsArray);
   };
@@ -99,6 +134,7 @@ class Basket extends React.Component {
                 </table>
               </div>
             </div>
+
             <div className="col mb-2">
               <div className="row">
                 <div className="col-sm-12  col-md-6">
@@ -107,9 +143,59 @@ class Basket extends React.Component {
                   </button>
                 </div>
                 <div className="col-sm-12 col-md-6 text-right">
-                  <button className="btn btn-lg btn-block btn-success text-uppercase">
-                    Оплатити
+                  <button
+                    className="btn btn-lg btn-block btn-success text-uppercase"
+                    onClick={this.openModal}
+                  >
+                    Оплатити {this.state.modalIsOpen}
                   </button>
+                  <Modal
+                    isOpen={this.state.modalIsOpen}
+                    onAfterOpen={this.afterOpenModal}
+                    onRequestClose={this.closeModal}
+                    style={this.customStyles}
+                    contentLabel="Example Modal"
+                  >
+                    <button onClick={this.closeModal}>Закрити</button>
+
+                    <form>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="exampleInputEmail1"
+                          aria-describedby="emailHelp"
+                          placeholder="Enter email"
+                        />
+                        <small id="emailHelp" class="form-text text-muted">
+                          We'll never share your email with anyone else.
+                        </small>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                          placeholder="Password"
+                        />
+                      </div>
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                        <label class="form-check-label" for="exampleCheck1">
+                          Check me out
+                        </label>
+                      </div>
+                      <button type="submit" class="btn btn-primary">
+                        Submit
+                      </button>
+                    </form>
+                  </Modal>
                 </div>
               </div>
             </div>
