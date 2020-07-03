@@ -1,4 +1,5 @@
 import React from "react";
+import "../assets/css/books.css";
 
 function Header() {
   return (
@@ -7,15 +8,6 @@ function Header() {
         <div className="container">
           <a className="navbar-brand" href="/">
             Сайт Андрія Любки.
-          </a>
-
-          <a
-            href="#"
-            className="burger"
-            data-toggle="collapse"
-            data-target="#main-navbar"
-          >
-            <span></span>
           </a>
         </div>
       </nav>

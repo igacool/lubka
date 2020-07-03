@@ -8,6 +8,7 @@ export const ProductList = [
     cost: 10,
     about: "роман",
     type: "novel",
+    stock: "у наявності",
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ export const ProductList = [
     cost: 20,
     about: "роман",
     type: "novel",
+    stock: "у наявності",
   },
   {
     id: 3,
@@ -28,6 +30,7 @@ export const ProductList = [
     cost: 30,
     about: "роман",
     type: "novel",
+    stock: "у наявності",
   },
   {
     id: 4,
@@ -38,6 +41,7 @@ export const ProductList = [
     cost: 40,
     about: "роман",
     type: "novel",
+    stock: "у наявності",
   },
   {
     id: 5,
@@ -48,6 +52,7 @@ export const ProductList = [
     cost: 50,
     about: "роман",
     type: "novel",
+    stock: "у наявності",
   },
   {
     id: 6,
@@ -58,6 +63,7 @@ export const ProductList = [
     cost: 60,
     about: "роман",
     type: "novel",
+    stock: "у наявності",
   },
   {
     id: 7,
@@ -67,6 +73,7 @@ export const ProductList = [
     cost: 135,
     about: "переклад",
     type: "translation",
+    stock: "у наявності",
   },
   {
     id: 8,
@@ -76,6 +83,7 @@ export const ProductList = [
     cost: 140,
     about: "переклад",
     type: "translation",
+    stock: "у наявності",
   },
   {
     id: 9,
@@ -85,6 +93,7 @@ export const ProductList = [
     cost: 140,
     about: "переклад",
     type: "translation",
+    stock: "у наявності",
   },
   {
     id: 10,
@@ -94,5 +103,6 @@ export const ProductList = [
     cost: 90,
     about: "переклад",
     type: "translation",
+    stock: "у наявності",
   },
 ];

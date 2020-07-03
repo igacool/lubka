@@ -9,7 +9,7 @@ class Basket extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalIsOpen: true,
+      modalIsOpen: false,
       productList: ProductList.filter((product) => {
         if (this.shipIds.includes(String(product.id))) {
           return true;
@@ -70,7 +70,7 @@ class Basket extends React.Component {
 
     this.setState({
       productList: productList,
-      modalIsOpen: true,
+      modalIsOpen: false,
     });
     localStorage.setItem("shopCart", shipIdsArray);
   };
@@ -110,7 +110,7 @@ class Basket extends React.Component {
                             <img src={require(`${currentProduct.imgSrc}`)} />{" "}
                           </td>
                           <td>{currentProduct.name}</td>
-                          <td>In stock</td>
+                          <td>{currentProduct.stock}</td>
 
                           <td className="text-right">
                             {currentProduct.cost} ГРН
@@ -156,7 +156,14 @@ class Basket extends React.Component {
                     style={this.customStyles}
                     contentLabel="Example Modal"
                   >
-                    <button onClick={this.closeModal}>Закрити</button>
+                    <button
+                      type="button"
+                      class="close"
+                      aria-label="Close"
+                      onClick={this.closeModal}
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
 
                     <form>
                       <div class="form-group">
@@ -192,7 +199,7 @@ class Basket extends React.Component {
                         </label>
                       </div>
                       <button type="submit" class="btn btn-primary">
-                        Submit
+                        Надіслати
                       </button>
                     </form>
                   </Modal>

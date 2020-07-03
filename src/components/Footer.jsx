@@ -13,17 +13,14 @@ function Footer() {
               <div className="credits"></div>
             </div>
             <div className="col-sm-6 social text-md-right">
-              <a href="foo">
+              <a href="https://twitter.com/">
                 <span className="icofont-twitter"></span>
               </a>
-              <a href="foo">
+              <a href="https://www.facebook.com/">
                 <span className="icofont-facebook"></span>
               </a>
-              <a href="foo">
-                <span className="icofont-dribbble"></span>
-              </a>
-              <a href="foo">
-                <span className="icofont-behance"></span>
+              <a href="https://www.google.com/">
+                <span className="icofont-google-plus"></span>
               </a>
             </div>
           </div>
