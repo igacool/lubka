@@ -2,21 +2,62 @@ import React from "react";
 import { ProductList } from "./ProductList";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
-import { useState } from "react";
+
 import "../assets/css/books.css";
 
 class Basket extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      value: "",
+
       modalIsOpen: false,
       productList: ProductList.filter((product) => {
         if (this.shipIds.includes(String(product.id))) {
           return true;
         } else return false;
       }),
+      emailDetails: {
+        firstName: "",
+        phoneNumber: "",
+        city: "",
+        post: "",
+        signBook: "",
+        email: "",
+      },
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
+
+  handleChange(event) {
+    this.setState({
+      emailDetails: {
+        ...this.state.emailDetails,
+        [event.target.name]: event.target.value,
+      },
+    });
+  }
+
+  handleDelete(event) {
+    this.setState({
+      ...this.state.emailDetails,
+      emailDetails: {
+        [event.target.name]: "",
+      },
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const books = this.state.productList.map(function (product) {
+      return product.name;
+    });
+    this.state.emailDetails.books = String(books);
+    console.log(this.state.emailDetails);
+  }
+
   subtitle;
   currentProduct;
   shipIds = localStorage.getItem("shopCart").split(",");
@@ -31,9 +72,10 @@ class Basket extends React.Component {
       width: "500px",
       maxwidth: "100%",
       transform: "translate(-50%, -50%)",
-      height: "400px",
+      height: "500px",
       maxheight: "100%",
       position: "fixed",
+      background: "#A3FA68",
     },
   };
 
@@ -138,7 +180,7 @@ class Basket extends React.Component {
             <div className="col mb-2">
               <div className="row">
                 <div className="col-sm-12  col-md-6">
-                  <button className="btn btn-block btn-light" onClick={`/`}>
+                  <button className="btn btn-block btn-light">
                     <Link to="/">Продовжити покупки</Link>
                   </button>
                 </div>
@@ -149,6 +191,7 @@ class Basket extends React.Component {
                   >
                     Оплатити {this.state.modalIsOpen}
                   </button>
+                  {Modal.setAppElement("body")}
                   <Modal
                     isOpen={this.state.modalIsOpen}
                     onAfterOpen={this.afterOpenModal}
@@ -158,47 +201,94 @@ class Basket extends React.Component {
                   >
                     <button
                       type="button"
-                      class="close"
+                      className="close"
                       aria-label="Close"
                       onClick={this.closeModal}
                     >
                       <span aria-hidden="true">&times;</span>
                     </button>
 
-                    <form>
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
+                    <form onSubmit={this.handleSubmit}>
+                      <div className="form-group">
+                        <label htmlFor="exampleInputEmail1">
+                          Як зв'язатися з вами
+                        </label>
+                        <small id="emailHelp" className="form-text text-muted">
+                          Заповнюючи форму, Ви надаєте згоду на використання та
+                          обробку Ваших персональних даних з метою надання
+                          послуги
+                        </small>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="firstName"
+                          value={this.state.id}
+                          onChange={this.handleChange}
+                          aria-describedby="emailHelp"
+                          placeholder="Ваше прізвище та ім'я:"
+                        />
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="city"
+                          aria-describedby="emailHelp"
+                          value={this.state.id}
+                          onChange={this.handleChange}
+                          placeholder="Місто, куди буде надіслано замовлення:"
+                        />
+                        <input
+                          type="number"
+                          className="form-control"
+                          name="post"
+                          value={this.state.id}
+                          onChange={this.handleChange}
+                          placeholder="Номер відділення Нової Пошти:"
+                        />
+                        <input
+                          type="tel"
+                          className="form-control"
+                          name="phoneNumber"
+                          value={this.state.id}
+                          onChange={this.handleChange}
+                          placeholder="Введіть номер телефону:"
+                        />
                         <input
                           type="email"
-                          class="form-control"
-                          id="exampleInputEmail1"
-                          aria-describedby="emailHelp"
-                          placeholder="Enter email"
-                        />
-                        <small id="emailHelp" class="form-text text-muted">
-                          We'll never share your email with anyone else.
-                        </small>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input
-                          type="password"
-                          class="form-control"
-                          id="exampleInputPassword1"
-                          placeholder="Password"
+                          className="form-control"
+                          name="email"
+                          value={this.state.id}
+                          onChange={this.handleChange}
+                          placeholder="Введіть вашу електронну адресу:"
                         />
                       </div>
-                      <div class="form-check">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="exampleCheck1"
-                        />
-                        <label class="form-check-label" for="exampleCheck1">
-                          Check me out
+                      <div className="form-group">
+                        <label htmlFor="signBook">
+                          Для кого та як підписати книгу?
                         </label>
+                        <div>
+                          <textarea
+                            id="txtArea"
+                            rows="2"
+                            cols="52"
+                            name="signBook"
+                            value={this.state.id}
+                            onChange={this.handleChange}
+                          ></textarea>
+                        </div>
                       </div>
-                      <button type="submit" class="btn btn-primary">
+
+                      <button
+                        type="reset"
+                        className="btn btn-primary"
+                        onClick={this.handleDelete}
+                      >
+                        Видалити всі дані
+                      </button>
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        id="send"
+                      >
                         Надіслати
                       </button>
                     </form>

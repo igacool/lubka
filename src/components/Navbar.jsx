@@ -7,7 +7,7 @@ function Navbar() {
     <>
       <div className="container">
         <div className="row mb-1 align-items-center">
-          <h3 className="hello">Український письменник, перекладач</h3>
+          <h3>Український письменник, перекладач</h3>
         </div>
       </div>
     </>

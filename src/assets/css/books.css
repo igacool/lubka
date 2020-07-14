@@ -17,10 +17,6 @@
   padding-top: 50px;
 }
 
-.hello {
-  padding-left: 15px;
-}
-
 .mb-0 {
   padding-left: 50px;
 }
@@ -75,4 +71,8 @@
 }
 .pagination {
   margin-top: 20px;
+}
+
+#send {
+  float: right;
 }

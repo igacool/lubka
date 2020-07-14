@@ -12,7 +12,6 @@ class Main extends React.Component {
   }
 
   filterList = (filterType) => {
-    console.log(filterType);
     if (filterType == "ProductList") {
       this.setState({
         productList: ProductList,
