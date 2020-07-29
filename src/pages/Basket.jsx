@@ -2,6 +2,7 @@ import React from "react";
 import { ProductList } from "./ProductList";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
+import axios from "axios";
 
 import "../assets/css/books.css";
 
@@ -42,8 +43,8 @@ class Basket extends React.Component {
 
   handleDelete(event) {
     this.setState({
-      ...this.state.emailDetails,
       emailDetails: {
+        ...this.state.emailDetails,
         [event.target.name]: "",
       },
     });
@@ -55,7 +56,12 @@ class Basket extends React.Component {
       return product.name;
     });
     this.state.emailDetails.books = String(books);
-    console.log(this.state.emailDetails);
+
+    var formData = this.state.emailDetails;
+
+    axios.post("/send-mail", formData).catch((err) => {
+      console.error(err);
+    });
   }
 
   subtitle;
@@ -123,6 +129,20 @@ class Basket extends React.Component {
         <section className="jumbotron text-center">
           <div className="container">
             <h1 className="jumbotron-heading">Список книг</h1>
+            <h9>
+              Щоб отримати книгу Андрія Любки з автографом (та підписом)
+              необхідно: <br></br>1. Внизу сторінки заповнити необхідну форму;{" "}
+              <br></br>
+              2. Надіслати вартість замовлення на картку Приватбанку 5457 0822
+              2015 2644 (Любка А.С.); <br></br>3. Підтвердити здійснений переказ
+              за допомогою фото чека чи скріншота з Приват24 та надіслати його
+              на пошту:
+              <a href={"mailto:https://knyhylyubka@gmail.com"}> тут</a>, або в
+              соц.мережі:
+              <a href={"https://www.facebook.com/yulia.lyubka"}> тут;</a>
+              <br></br> 4. Отримати замовлення у найближчому до вас відділенні
+              Нової Пошти, оплатити доставку.
+            </h9>
           </div>
         </section>
 
@@ -149,7 +169,10 @@ class Basket extends React.Component {
                       return (
                         <tr key={index}>
                           <td>
-                            <img src={require(`${currentProduct.imgSrc}`)} />{" "}
+                            <img
+                              alt="pic"
+                              src={require(`${currentProduct.imgSrc}`)}
+                            />{" "}
                           </td>
                           <td>{currentProduct.name}</td>
                           <td>{currentProduct.stock}</td>
@@ -184,12 +207,12 @@ class Basket extends React.Component {
                     <Link to="/">Продовжити покупки</Link>
                   </button>
                 </div>
-                <div className="col-sm-12 col-md-6 text-right">
+                <div className="col-sm-3 col-md-6 text-right">
                   <button
-                    className="btn btn-lg btn-block btn-success text-uppercase"
+                    className="btn btn-mid btn-block btn-success text-uppercase"
                     onClick={this.openModal}
                   >
-                    Оплатити {this.state.modalIsOpen}
+                    Заповнити форму {this.state.modalIsOpen}
                   </button>
                   {Modal.setAppElement("body")}
                   <Modal
@@ -208,7 +231,7 @@ class Basket extends React.Component {
                       <span aria-hidden="true">&times;</span>
                     </button>
 
-                    <form onSubmit={this.handleSubmit}>
+                    <form name="person" onSubmit={this.handleSubmit}>
                       <div className="form-group">
                         <label htmlFor="exampleInputEmail1">
                           Як зв'язатися з вами
@@ -269,7 +292,7 @@ class Basket extends React.Component {
                           <textarea
                             id="txtArea"
                             rows="2"
-                            cols="52"
+                            cols="54"
                             name="signBook"
                             value={this.state.id}
                             onChange={this.handleChange}
