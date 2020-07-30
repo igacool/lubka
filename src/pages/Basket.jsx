@@ -52,14 +52,11 @@ class Basket extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const books = this.state.productList.map(function (product) {
-      return product.name;
-    });
-    this.state.emailDetails.books = String(books);
+    this.state.emailDetails.books = this.state.productList;
 
     var formData = this.state.emailDetails;
 
-    axios.post("/send-mail", formData).catch((err) => {
+    axios.post("http://127.0.0.1:3001/send-mail", formData).catch((err) => {
       console.error(err);
     });
   }
@@ -128,21 +125,33 @@ class Basket extends React.Component {
       <>
         <section className="jumbotron text-center">
           <div className="container">
-            <h1 className="jumbotron-heading">Список книг</h1>
-            <h9>
-              Щоб отримати книгу Андрія Любки з автографом (та підписом)
-              необхідно: <br></br>1. Внизу сторінки заповнити необхідну форму;{" "}
-              <br></br>
-              2. Надіслати вартість замовлення на картку Приватбанку 5457 0822
-              2015 2644 (Любка А.С.); <br></br>3. Підтвердити здійснений переказ
-              за допомогою фото чека чи скріншота з Приват24 та надіслати його
-              на пошту:
-              <a href={"mailto:https://knyhylyubka@gmail.com"}> тут</a>, або в
+            <h2 className="jumbotron-heading">
+              Як отримати книгу Андрія Любки з автографом (та підписом)
+            </h2>
+
+            <div>{"1. Обрати книги, які хочете придбати"}</div>
+            <div>
+              {
+                "2. Надіслати вартість замовлення на картку Приватбанку 5457 0822 2015 2644 (Любка А.С.);"
+              }
+            </div>
+            <div>
+              {" "}
+              3. Підтвердити здійснений переказ за допомогою фото чека чи
+              скріншота з Приват24 та надіслати його на пошту:
+              <a href="mailto:https://knyhylyubka@gmail.com"> тут</a>, або в
               соц.мережі:
-              <a href={"https://www.facebook.com/yulia.lyubka"}> тут;</a>
-              <br></br> 4. Отримати замовлення у найближчому до вас відділенні
-              Нової Пошти, оплатити доставку.
-            </h9>
+              <a href="https://www.facebook.com/yulia.lyubka"> тут;</a>
+            </div>
+            <div>
+              {
+                "3. Внизу даної сторінки заповнити необхідну форму та надіслати її нам;"
+              }
+            </div>
+            <div>
+              4. Отримати замовлення у найближчому до вас відділенні Нової
+              Пошти, оплатити доставку.
+            </div>
           </div>
         </section>
 
