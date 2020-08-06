@@ -3,21 +3,26 @@ import { ProductList } from "./ProductList";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import axios from "axios";
-
+import style from "./customStyles.module.css";
 import "../assets/css/books.css";
 
 class Basket extends React.Component {
+  state = {};
   constructor(props) {
     super(props);
+    const productList = ProductList.map((item) => {
+      item.count = 1;
+      return item;
+    }).filter((product) => {
+      if (this.shipIds.includes(String(product.id))) {
+        return true;
+      } else return false;
+    });
     this.state = {
+      productList,
       value: "",
-
       modalIsOpen: false,
-      productList: ProductList.filter((product) => {
-        if (this.shipIds.includes(String(product.id))) {
-          return true;
-        } else return false;
-      }),
+
       emailDetails: {
         firstName: "",
         phoneNumber: "",
@@ -26,10 +31,61 @@ class Basket extends React.Component {
         signBook: "",
         email: "",
       },
+      countSum: this.getCountSum(productList),
+      totalSum: this.getTotalSum(productList),
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleCount = this.handleCount.bind(this);
+    this.countSum = this.countSum.bind(this);
+  }
+
+  handleCount(event, id) {
+    const productList = this.state.productList.map((product) => {
+      if (product.id === id) {
+        product.count = event.target.value;
+      }
+      return product;
+    });
+    this.setState({
+      productList,
+    });
+    this.countSum();
+    this.totalSum();
+  }
+
+  countSum() {
+    let countSum = this.getCountSum(this.state.productList);
+    this.setState({
+      countSum,
+    });
+  }
+  getCountSum(productList) {
+    let countSum = 0;
+    for (let i = 0; i < productList.length; i++) {
+      if (productList[i].count > 0) {
+        countSum += +productList[i].count;
+      }
+    }
+    return countSum;
+  }
+
+  totalSum() {
+    let totalSum = this.getTotalSum(this.state.productList);
+    this.setState({
+      totalSum,
+    });
+  }
+
+  getTotalSum(productList) {
+    let totalSum = 0;
+    for (let i = 0; i < productList.length; i++) {
+      if (productList[i].count > 0) {
+        totalSum += +productList[i].count * productList[i].cost;
+      }
+    }
+    return totalSum;
   }
 
   handleChange(event) {
@@ -55,32 +111,19 @@ class Basket extends React.Component {
     this.state.emailDetails.books = this.state.productList;
 
     var formData = this.state.emailDetails;
-
+    console.log(formData);
     axios.post("http://127.0.0.1:3001/send-mail", formData).catch((err) => {
       console.error(err);
+    });
+
+    this.setState({
+      modalIsOpen: false,
     });
   }
 
   subtitle;
   currentProduct;
   shipIds = localStorage.getItem("shopCart").split(",");
-
-  customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      width: "500px",
-      maxwidth: "100%",
-      transform: "translate(-50%, -50%)",
-      height: "500px",
-      maxheight: "100%",
-      position: "fixed",
-      background: "#A3FA68",
-    },
-  };
 
   openModal = () => {
     this.setState({
@@ -115,6 +158,8 @@ class Basket extends React.Component {
 
     this.setState({
       productList: productList,
+      countSum: this.getCountSum(productList),
+      totalSum: this.getTotalSum(productList),
       modalIsOpen: false,
     });
     localStorage.setItem("shopCart", shipIdsArray);
@@ -149,8 +194,9 @@ class Basket extends React.Component {
               }
             </div>
             <div>
-              4. Отримати замовлення у найближчому до вас відділенні Нової
-              Пошти, оплатити доставку.
+              {
+                "4. Отримати замовлення у найближчому до вас відділенні Нової Пошти, оплатити доставку."
+              }
             </div>
           </div>
         </section>
@@ -164,7 +210,7 @@ class Basket extends React.Component {
                     <tr>
                       <th scope="col"> </th>
                       <th scope="col">Назва книги</th>
-                      <th scope="col">Наявність</th>
+                      <th scope="col">Кількість</th>
 
                       <th scope="col" className="text-right">
                         Ціна
@@ -184,7 +230,22 @@ class Basket extends React.Component {
                             />{" "}
                           </td>
                           <td>{currentProduct.name}</td>
-                          <td>{currentProduct.stock}</td>
+                          <td>
+                            <div className="form-group row">
+                              <div className="col-sm-10">
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  name="count"
+                                  value={currentProduct.count}
+                                  onChange={(event) =>
+                                    this.handleCount(event, currentProduct.id)
+                                  }
+                                  placeholder="0"
+                                />
+                              </div>
+                            </div>
+                          </td>
 
                           <td className="text-right">
                             {currentProduct.cost} ГРН
@@ -209,6 +270,21 @@ class Basket extends React.Component {
               </div>
             </div>
 
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col"> </th>
+                  <th scope="col">Загалом:</th>
+                  <th scope="col">Кількість:</th>
+                  <th className="text-right">{this.state.countSum} шт</th>
+                  <th scope="col" className="text-left">
+                    Ціна:
+                  </th>
+                  <th className="text-right">{this.state.totalSum} грн</th>
+                  <th> </th>
+                </tr>
+              </thead>
+            </table>
             <div className="col mb-2">
               <div className="row">
                 <div className="col-sm-12  col-md-6">
@@ -228,7 +304,6 @@ class Basket extends React.Component {
                     isOpen={this.state.modalIsOpen}
                     onAfterOpen={this.afterOpenModal}
                     onRequestClose={this.closeModal}
-                    style={this.customStyles}
                     contentLabel="Example Modal"
                   >
                     <button
@@ -241,67 +316,119 @@ class Basket extends React.Component {
                     </button>
 
                     <form name="person" onSubmit={this.handleSubmit}>
-                      <div className="form-group">
-                        <label htmlFor="exampleInputEmail1">
+                      <div className="modal-header">
+                        <div className={style.connect}>
                           Як зв'язатися з вами
-                        </label>
-                        <small id="emailHelp" className="form-text text-muted">
-                          Заповнюючи форму, Ви надаєте згоду на використання та
-                          обробку Ваших персональних даних з метою надання
-                          послуги
-                        </small>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="firstName"
-                          value={this.state.id}
-                          onChange={this.handleChange}
-                          aria-describedby="emailHelp"
-                          placeholder="Ваше прізвище та ім'я:"
-                        />
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="city"
-                          aria-describedby="emailHelp"
-                          value={this.state.id}
-                          onChange={this.handleChange}
-                          placeholder="Місто, куди буде надіслано замовлення:"
-                        />
-                        <input
-                          type="number"
-                          className="form-control"
-                          name="post"
-                          value={this.state.id}
-                          onChange={this.handleChange}
-                          placeholder="Номер відділення Нової Пошти:"
-                        />
-                        <input
-                          type="tel"
-                          className="form-control"
-                          name="phoneNumber"
-                          value={this.state.id}
-                          onChange={this.handleChange}
-                          placeholder="Введіть номер телефону:"
-                        />
-                        <input
-                          type="email"
-                          className="form-control"
-                          name="email"
-                          value={this.state.id}
-                          onChange={this.handleChange}
-                          placeholder="Введіть вашу електронну адресу:"
-                        />
+                        </div>
                       </div>
                       <div className="form-group">
-                        <label htmlFor="signBook">
+                        <div className="form-group row">
+                          <label
+                            htmlFor="inputPassword"
+                            className="col-sm-2 col-form-label"
+                          >
+                            Ім'я
+                          </label>
+                          <div className="col-sm-10">
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="firstName"
+                              value={this.state.id}
+                              onChange={this.handleChange}
+                              aria-describedby="emailHelp"
+                              placeholder="Ваше прізвище та ім'я:"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="form-group row">
+                          <label
+                            htmlFor="inputPassword"
+                            className="col-sm-2 col-form-label"
+                          >
+                            Місто
+                          </label>
+                          <div className="col-sm-10">
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="city"
+                              aria-describedby="emailHelp"
+                              value={this.state.id}
+                              onChange={this.handleChange}
+                              placeholder="Місто, куди буде надіслано замовлення:"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="form-group row">
+                          <label
+                            htmlFor="inputPassword"
+                            className="col-sm-2 col-form-label"
+                          >
+                            Нова пошта
+                          </label>
+                          <div className="col-sm-10">
+                            <input
+                              type="number"
+                              className="form-control"
+                              name="post"
+                              value={this.state.id}
+                              onChange={this.handleChange}
+                              placeholder="Номер відділення Нової Пошти:"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="form-group row">
+                          <label
+                            htmlFor="inputPassword"
+                            className="col-sm-2 col-form-label"
+                          >
+                            Номер телефону
+                          </label>
+                          <div className="col-sm-10">
+                            <input
+                              type="tel"
+                              className="form-control"
+                              name="phoneNumber"
+                              value={this.state.id}
+                              onChange={this.handleChange}
+                              placeholder="Введіть номер телефону:"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="form-group row">
+                          <label
+                            htmlFor="inputPassword"
+                            className="col-sm-2 col-form-label"
+                          >
+                            Електронна адреса
+                          </label>
+                          <div className="col-sm-10">
+                            <input
+                              type="email"
+                              className="form-control"
+                              name="email"
+                              value={this.state.id}
+                              onChange={this.handleChange}
+                              placeholder="Введіть вашу електронну адресу:"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        <div className={style.whomsign}>
                           Для кого та як підписати книгу?
-                        </label>
+                        </div>
                         <div>
                           <textarea
+                            className="form-control"
                             id="txtArea"
                             rows="2"
-                            cols="54"
+                            cols="100"
                             name="signBook"
                             value={this.state.id}
                             onChange={this.handleChange}
