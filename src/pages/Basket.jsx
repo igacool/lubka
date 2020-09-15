@@ -30,6 +30,7 @@ class Basket extends React.Component {
         post: "",
         signBook: "",
         email: "",
+        totalSum: "",
       },
       countSum: this.getCountSum(productList),
       totalSum: this.getTotalSum(productList),
@@ -109,7 +110,7 @@ class Basket extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.state.emailDetails.books = this.state.productList;
-
+    this.state.emailDetails.totalSum = this.state.totalSum;
     var formData = this.state.emailDetails;
     console.log(formData);
     axios.post("http://127.0.0.1:3001/send-mail", formData).catch((err) => {
@@ -119,6 +120,7 @@ class Basket extends React.Component {
     this.setState({
       modalIsOpen: false,
     });
+    this.handleDelete(event);
   }
 
   subtitle;
@@ -174,30 +176,13 @@ class Basket extends React.Component {
               Як отримати книгу Андрія Любки з автографом (та підписом)
             </h2>
 
-            <div>{"1. Обрати книги, які хочете придбати"}</div>
+            <div>{"1. Заповніть форму внизу"}</div>
             <div>
               {
-                "2. Надіслати вартість замовлення на картку Приватбанку 5457 0822 2015 2644 (Любка А.С.);"
+                "2. Виконайте інструкцію, яка прийде Вам на імейл"
               }
             </div>
-            <div>
-              {" "}
-              3. Підтвердити здійснений переказ за допомогою фото чека чи
-              скріншота з Приват24 та надіслати його на пошту:
-              <a href="mailto:https://knyhylyubka@gmail.com"> тут</a>, або в
-              соц.мережі:
-              <a href="https://www.facebook.com/yulia.lyubka"> тут;</a>
-            </div>
-            <div>
-              {
-                "3. Внизу даної сторінки заповнити необхідну форму та надіслати її нам;"
-              }
-            </div>
-            <div>
-              {
-                "4. Отримати замовлення у найближчому до вас відділенні Нової Пошти, оплатити доставку."
-              }
-            </div>
+            
           </div>
         </section>
 

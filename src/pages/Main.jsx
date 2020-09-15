@@ -37,7 +37,7 @@ class Main extends React.Component {
             data-aos="fade-up"
             data-aos-delay="100"
           >
-            <div id="filters" className="filters">
+            <div id="filters" className="filters" >
               <a
                 className="active"
                 data-filter="*"

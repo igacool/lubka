@@ -76,3 +76,6 @@
 #send {
   float: right;
 }
+#filters{
+  cursor: pointer;
+}
